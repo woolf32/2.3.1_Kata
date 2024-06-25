@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.podlesnykh.spring_mvc_hibernate.entity.Employee;
 import ru.podlesnykh.spring_mvc_hibernate.services.EmployeeService;
 
@@ -31,7 +31,7 @@ public class MyController {
     }
 
     @GetMapping ("/{id}")
-    public String getEmployeeById (@PathVariable("id") int id, Model model){
+    public String getEmployeeById (@RequestParam("id") int id, Model model){
         model.addAttribute("employee",employeeService.getEmployeeById(id));
         return "employee/showId";
     }
@@ -49,18 +49,18 @@ public class MyController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editEmployee ( Model model, @PathVariable("id") int id){
+    public String editEmployee ( Model model, @RequestParam("id") int id){
         model.addAttribute("employee",employeeService.getEmployeeById(id));
         return "employee/edit";
     }
     @PatchMapping("/{id}")
-    public String update (@ModelAttribute("employee") Employee employee, @PathVariable("id") int id){
+    public String update (@ModelAttribute("employee") Employee employee, @RequestParam("id") int id){
         employeeService.update(id,employee);
         return "redirect:/employee";
     }
 
-    @DeleteMapping("/{id}")
-    public String delete (@PathVariable("id") int id){
+    @PostMapping ("/{id}")
+    public String delete (@RequestParam("id") int id){
         employeeService.delete(id);
         return "redirect:/employee";
     }
