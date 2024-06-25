@@ -1,53 +1,54 @@
 package ru.podlesnykh.spring_mvc_hibernate.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.podlesnykh.spring_mvc_hibernate.dao.EmployeeDAO;
 import ru.podlesnykh.spring_mvc_hibernate.entity.Employee;
-import ru.podlesnykh.spring_mvc_hibernate.repositories.EmployeeRepositories;
+
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
-@Transactional (readOnly = true)
+@Repository
+@Transactional(readOnly = true)
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final EmployeeRepositories employeeRepositories;
+    private final EmployeeDAO employeeDAO;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepositories employeeRepositories) {
-        this.employeeRepositories = employeeRepositories;
+    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
+        this.employeeDAO = employeeDAO;
     }
 
     @Override
     public List<Employee> showAllEmployee() {
-        return employeeRepositories.findAll();
+        return employeeDAO.showAllEmployee();
     }
 
     @Override
     public Employee getEmployeeById(int id) {
-        Optional<Employee> employee = employeeRepositories.findById(id);
-        return employee.orElse(null);
+       return employeeDAO.getEmployeeById(id);
     }
 
     @Transactional
     @Override
     public void save(Employee employee) {
-        employeeRepositories.save(employee);
+        employeeDAO.save(employee);
     }
 
     @Transactional
     @Override
     public void update(int id, Employee updateEmployee) {
-        updateEmployee.setId(id);
-        employeeRepositories.save(updateEmployee);
+        employeeDAO.update(id, updateEmployee);
     }
 
     @Transactional
     @Override
     public void delete(int id) {
-        employeeRepositories.deleteById(id);
+        employeeDAO.delete(id);
     }
 
 
