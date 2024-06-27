@@ -38,7 +38,7 @@ public class SpringConfig implements WebMvcConfigurer {
     private final Environment env;
 
     @Autowired
-    public SpringConfig (ApplicationContext applicationContext, Environment env) {
+    public SpringConfig(ApplicationContext applicationContext, Environment env) {
 
         this.applicationContext = applicationContext;
         this.env = env;
@@ -88,7 +88,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return properties;
     }
 
-        @Bean
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(getDataSource());
@@ -101,12 +101,12 @@ public class SpringConfig implements WebMvcConfigurer {
         return em;
     }
 
-  @Bean
-  public PlatformTransactionManager transactionManager() {
-      JpaTransactionManager transactionManager = new JpaTransactionManager();
-      transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
 
-      return transactionManager;
-  }
+        return transactionManager;
+    }
 
 }
